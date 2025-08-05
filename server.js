@@ -85,7 +85,7 @@ setInterval(function(){
 },1000);
 
 setInterval(() => {
-  fetch("https://wrestleonline.onrender.com")
+  fetch("https://wrestleonlineserver.onrender.com")
     .then(() => console.log("Ping!"))
     .catch(err => console.error("Błąd pingu:", err));
 }, 10 * 60 * 1000); // co 10 minut
