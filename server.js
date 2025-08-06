@@ -23,14 +23,15 @@ io.on('connection', (socket) => {
 
   // Kiedy klient wyśle swoje koordynaty
   socket.on('sendCoords', (coords) => {
-    if(Array.isArray(coords)){
-      players[socket.id] = coords[0];
-      for(var p = 1 ; p < coords.length ; p++){
-        players[socket.id+"_"+p] = coords[p];
-      }
-    } else {
-      players[socket.id] = coords;
+    players[socket.id] = coords;
+    
+    if(players[socket.id].grappledBy != null){
+        players[socket.id].y = playerId(players[socket.id].grappledBy).y;
+        players[socket.id].x = (playerId(players[socket.id].grappledBy).x > players[socket.id].x) ? (playerId(players[socket.id].grappledBy).x - 35) : (playerId(players[socket.id].grappledBy).x + 35);
     }
+
+
+    
   });
 
   // Kiedy klient wyśle info o akcji usera
@@ -58,14 +59,17 @@ http.listen(PORT, () => {
   console.log(`Serwer działa na porcie ${PORT}`);
 });
 
+function playerId(id){
+    for (let d in players) {
+        if(players[d].id == id){
+            return players[d];
+        }
+    }
+}
+
 setInterval(function(){
   io.emit('updateCoords', players);
 },20);
-
-setInterval(function(){
-  if(countBullets > 0){ console.log(countBullets); }
-  countBullets = 0;
-},1000);
 
 setInterval(() => {
   fetch("https://wrestleonlineserver.onrender.com")
