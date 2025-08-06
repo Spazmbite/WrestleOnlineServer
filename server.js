@@ -24,8 +24,11 @@ io.on('connection', (socket) => {
   // Kiedy klient wyśle swoje koordynaty
   socket.on('sendCoords', (coords) => {
     players[socket.id] = coords;
-    
-       
+  });
+
+  // Wymuś kontrolę nad innym graczem
+  socket.on('sendCoordsPlayer', (combinedCoords) => {
+    players[pId(combinedCoords[0])] = combinedCoords[1];
   });
 
   // Kiedy klient wyśle info o akcji usera
@@ -40,11 +43,6 @@ io.on('connection', (socket) => {
 
   socket.on('disconnect', () => {
     delete players[socket.id];
-    /*if(players[socket.id+"_1"]){ delete players[socket.id+"_1"]; }
-    if(players[socket.id+"_2"]){ delete players[socket.id+"_2"]; }
-    if(players[socket.id+"_3"]){ delete players[socket.id+"_3"]; }
-    if(players[socket.id+"_4"]){ delete players[socket.id+"_4"]; }
-    if(players[socket.id+"_5"]){ delete players[socket.id+"_5"]; }*/
     io.emit('updateCoords', players);
   });
 });
@@ -59,6 +57,15 @@ function playerId(id){
             return players[d];
         }
     }
+}
+
+function pId(id){
+  for (let d in players) {
+      if(players[d].id == id){
+          return d;
+      }
+  }
+  return null;
 }
 
 setInterval(function(){
