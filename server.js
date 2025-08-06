@@ -31,26 +31,11 @@ io.on('connection', (socket) => {
     } else {
       players[socket.id] = coords;
     }
-    
-    //io.emit('updateCoords', players); // wysyłamy do wszystkich
   });
 
-
-
-  /* BACKUP
-  // Kiedy klient wyśle swoje koordynaty
-  socket.on('sendCoords', (coords) => {
-    players[socket.id] = coords;
-    io.emit('updateCoords', players); // wysyłamy do wszystkich
-  });
-  */
-
-  // Kiedy klient wyśle info o strzale
-  socket.on('sendBullets', (bullet) => {
-    //bullets[socket.id] = bullet;
-    //countBullets++;
-    //bullets.push(bullet);
-    io.emit('updateBullets', bullet); // wysyłamy do wszystkich
+  // Kiedy klient wyśle info o akcji usera
+  socket.on('sendAction', (act) => {
+    io.emit('updateActions', act); // wysyłamy do wszystkich
   });
 
   // Kiedy klient wyśle info log
@@ -75,8 +60,6 @@ http.listen(PORT, () => {
 
 setInterval(function(){
   io.emit('updateCoords', players);
-  //io.emit('updateBullets', bullets);
-  //bullets = [];
 },20);
 
 setInterval(function(){
