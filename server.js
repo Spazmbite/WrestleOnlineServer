@@ -25,13 +25,7 @@ io.on('connection', (socket) => {
   socket.on('sendCoords', (coords) => {
     players[socket.id] = coords;
     
-    if(players[socket.id].grappledBy != null){
-        players[socket.id].y = playerId(players[socket.id].grappledBy).y;
-        players[socket.id].x = (playerId(players[socket.id].grappledBy).x > players[socket.id].x) ? (playerId(players[socket.id].grappledBy).x - 35) : (playerId(players[socket.id].grappledBy).x + 35);
-    }
-
-
-    
+       
   });
 
   // Kiedy klient wyśle info o akcji usera
