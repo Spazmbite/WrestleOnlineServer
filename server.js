@@ -29,6 +29,8 @@ io.on('connection', (socket) => {
     if(players[newCoords.socket] != undefined){
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
+    } else {
+      console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
     }
       
   });
