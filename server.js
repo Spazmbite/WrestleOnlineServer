@@ -38,19 +38,19 @@ io.on('connection', (socket) => {
 
   // Informacje o akcji od usera
   socket.on('sendAction', (act) => {
-    // grappling
+    
+    // == grappling ==
     if(act[1] == "grapple"){
       console.log(`(${socket.id})`,`Grappling...`);
       var idGrappled = findClosestEnemy(act[0]);
-      if(idGrappled != null){
+      if(idGrappled != null && idGrappled < 40){
         console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
         players[act[0]].grappling = idGrappled;
         players[idGrappled].grappledBy = act[0];
       }
     }
 
-    
-    //io.emit('updateActions', act); // wysyłamy do wszystkich
+    io.emit('updatePlayers', players);
   });
 
   
@@ -117,7 +117,7 @@ function distanceBetweenPoints(x1, y1, x2, y2) {
 }
 
 setInterval(function(){
-  io.emit('updateCoords', players);
+  io.emit('updatePlayers', players);
 },20);
 
 setInterval(() => {
