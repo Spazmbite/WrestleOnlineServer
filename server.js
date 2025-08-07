@@ -51,10 +51,12 @@ io.on('connection', (socket) => {
           console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
           players[act[0]].grappling = idGrappled;
           players[idGrappled].grappledBy = act[0];
+          players[idGrappled].anim = "idleGrapple";
         }
       } else {
         console.log(`(${socket.id})`,`Stopping grapple...`);
         players[players[act[0]].grappling].grappledBy = null;
+        players[players[act[0]].grappling].anim = "";
         players[act[0]].grappling = null;
       }
       
