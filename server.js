@@ -29,6 +29,7 @@ io.on('connection', (socket) => {
     if(players[newCoords.socket] != undefined){
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
+      players[newCoords.socket].facing = newCoords.facing;
       players[newCoords.socket].timeout = Date.now();
     } else {
       //console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
@@ -109,7 +110,9 @@ function findNearestEnemy(id){
   for (let p in players) {
     if(p != id){
       var thisDist = distanceBetweenPoints(players[id].x, players[id].y, players[p].x, players[p].y);
-      if(thisDist < dist && thisDist < 30 && players[id].grappledBy == null){
+      if(thisDist < dist && thisDist < 30 && players[id].grappledBy == null && players[p].grappledBy == null  && 
+         ((players[id].x > players[p].x && players[id].facing == -1) || (players[id].x <= players[p].x && players[id].facing == 1)) 
+        ){
         dist = thisDist;
         out = p;
       }
