@@ -69,7 +69,7 @@ io.on('connection', (socket) => {
   });
 
   socket.on('disconnect', () => {
-    console.log(`(${socket.id})`,`User ${player.id} disconnected.`);
+    console.log(`(${socket.id})`,`User disconnected.`);
     delete players[socket.id];
     io.emit('updateCoords', players);
   });
