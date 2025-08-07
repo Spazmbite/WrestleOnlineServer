@@ -31,11 +31,27 @@ io.on('connection', (socket) => {
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].timeout = Date.now();
     } else {
-      console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
+      //console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
     }
       
   });
 
+  // Informacje o akcji od usera
+  socket.on('sendAction', (act) => {
+    // grappling
+    if(act[1] == "grapple"){
+      console.log(`(${socket.id})`,`Grappling...`);
+      var idGrappled = findClosestEnemy(act[0]);
+      if(idGrappled != null){
+        console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
+        players[act[0]].grappling = idGrappled;
+        players[idGrappled].grappledBy = act[0];
+      }
+    }
+
+    
+    //io.emit('updateActions', act); // wysyłamy do wszystkich
+  });
 
   
   
@@ -45,10 +61,7 @@ io.on('connection', (socket) => {
     players[pId(combinedCoords[0])] = combinedCoords[1];
   });
 
-  // Kiedy klient wyśle info o akcji usera
-  socket.on('sendAction', (act) => {
-    io.emit('updateActions', act); // wysyłamy do wszystkich
-  });
+  
 
   // Kiedy klient wyśle info log
   socket.on('sendLog', (log) => {
@@ -65,6 +78,21 @@ http.listen(PORT, () => {
   console.log(`Serwer działa na porcie ${PORT}`);
 });
 
+function findClosestEnemy(id){
+  var out = null;
+  var dist = 100000000;
+  for (let p in players) {
+    if(p != id){
+      var thisDist = distanceBetweenPoints(players[id].x, players[id].y, players[d].x, players[d].y);
+      if(thisDist < dist){
+        dist = thisDist;
+        out = d;
+      }
+    }
+  }
+  return out;
+}
+
 function playerId(id){
     for (let d in players) {
         if(players[d].id == id){
@@ -80,6 +108,12 @@ function pId(id){
       }
   }
   return null;
+}
+
+function distanceBetweenPoints(x1, y1, x2, y2) {
+    const dx = x2 - x1;
+    const dy = y2 - y1;
+    return Math.sqrt(dx * dx + dy * dy);
 }
 
 setInterval(function(){
