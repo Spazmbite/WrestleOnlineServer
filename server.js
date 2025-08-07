@@ -42,8 +42,8 @@ io.on('connection', (socket) => {
     // == grappling ==
     if(act[1] == "grapple"){
       console.log(`(${socket.id})`,`Grappling...`);
-      var idGrappled = findClosestEnemy(act[0]);
-      if(idGrappled != null && idGrappled < 40){
+      var idGrappled = findNearestEnemy(act[0]);
+      if(idGrappled != null){
         console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
         players[act[0]].grappling = idGrappled;
         players[idGrappled].grappledBy = act[0];
@@ -85,6 +85,21 @@ function findClosestEnemy(id){
     if(p != id){
       var thisDist = distanceBetweenPoints(players[id].x, players[id].y, players[p].x, players[p].y);
       if(thisDist < dist){
+        dist = thisDist;
+        out = p;
+      }
+    }
+  }
+  return out;
+}
+
+function findNearestEnemy(id){
+  var out = null;
+  var dist = 100000000;
+  for (let p in players) {
+    if(p != id){
+      var thisDist = distanceBetweenPoints(players[id].x, players[id].y, players[p].x, players[p].y);
+      if(thisDist < dist && thisDist < 40){
         dist = thisDist;
         out = p;
       }
