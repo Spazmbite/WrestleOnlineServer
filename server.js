@@ -11,6 +11,97 @@ const io = require('socket.io')(http, {
 const PORT = process.env.PORT || 3000;
 
 let players = {}; // tu trzymamy dane o użytkownikach
+
+app.use(express.static('public')); // frontend w folderze 'public'
+
+io.on('connection', (socket) => {
+  console.log(`(${socket.id})`,`Connecting user... `);
+  
+  socket.on('sendInit', (player) => {
+    console.log(`(${socket.id})`,`User ${player.id} spawned`);
+    players[socket.id] = player;
+  });
+  
+
+
+
+  
+  // Kiedy klient wyśle swoje koordynaty
+  socket.on('sendCoords', (coords) => {
+    //players[socket.id] = coords;
+  });
+
+  // Wymuś kontrolę nad innym graczem
+  socket.on('sendCoordsPlayer', (combinedCoords) => {
+    players[pId(combinedCoords[0])] = combinedCoords[1];
+  });
+
+  // Kiedy klient wyśle info o akcji usera
+  socket.on('sendAction', (act) => {
+    io.emit('updateActions', act); // wysyłamy do wszystkich
+  });
+
+  // Kiedy klient wyśle info log
+  socket.on('sendLog', (log) => {
+    io.emit('updateLog', log); // wysyłamy do wszystkich
+  });
+
+  socket.on('disconnect', () => {
+    delete players[socket.id];
+    io.emit('updateCoords', players);
+  });
+});
+
+http.listen(PORT, () => {
+  console.log(`Serwer działa na porcie ${PORT}`);
+});
+
+function playerId(id){
+    for (let d in players) {
+        if(players[d].id == id){
+            return players[d];
+        }
+    }
+}
+
+function pId(id){
+  for (let d in players) {
+      if(players[d].id == id){
+          return d;
+      }
+  }
+  return null;
+}
+
+setInterval(function(){
+  io.emit('updateCoords', players);
+},20);
+
+setInterval(() => {
+  fetch("https://wrestleonlineserver.onrender.com")
+    .then(() => console.log("Ping!"))
+    .catch(err => console.error("Błąd pingu:", err));
+}, 10 * 60 * 1000); // co 10 minut
+
+
+
+
+
+
+/*
+const express = require('express');
+const app = express();
+const http = require('http').createServer(app);
+const io = require('socket.io')(http, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
+
+const PORT = process.env.PORT || 3000;
+
+let players = {}; // tu trzymamy dane o użytkownikach
 let bullets = {};
 
 
@@ -77,3 +168,5 @@ setInterval(() => {
     .then(() => console.log("Ping!"))
     .catch(err => console.error("Błąd pingu:", err));
 }, 10 * 60 * 1000); // co 10 minut
+
+*/
