@@ -46,25 +46,26 @@ io.on('connection', (socket) => {
 
   // Informacje o akcji od usera
   socket.on('sendAction', (act) => {
-    
-    // == grappling ==
-    if(act[1] == "grapple"){
-      if(players[act[0]].grappling == null){
-        console.log(`(${socket.id})`,`Grappling...`);
-        var idGrappled = findNearestEnemy(act[0]);
-        if(idGrappled != null){
-          console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
-          players[act[0]].grappling = idGrappled;
-          players[idGrappled].grappledBy = act[0];
-          players[idGrappled].forceanim = "idleGrapple";
+    if(players[act[0]] != undefined){
+      // == grappling ==
+      if(act[1] == "grapple"){
+        if(players[act[0]].grappling == null){
+          console.log(`(${socket.id})`,`Grappling...`);
+          var idGrappled = findNearestEnemy(act[0]);
+          if(idGrappled != null){
+            console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
+            players[act[0]].grappling = idGrappled;
+            players[idGrappled].grappledBy = act[0];
+            players[idGrappled].forceanim = "idleGrapple";
+          }
+        } else {
+          console.log(`(${socket.id})`,`Stopping grapple...`);
+          players[players[act[0]].grappling].grappledBy = null;
+          players[players[act[0]].grappling].forceanim = "";
+          players[act[0]].grappling = null;
         }
-      } else {
-        console.log(`(${socket.id})`,`Stopping grapple...`);
-        players[players[act[0]].grappling].grappledBy = null;
-        players[players[act[0]].grappling].forceanim = "";
-        players[act[0]].grappling = null;
+        
       }
-      
     }
 
     io.emit('updatePlayers', players);
