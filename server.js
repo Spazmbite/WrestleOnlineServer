@@ -51,7 +51,7 @@ io.on('connection', (socket) => {
         }
       } else {
         console.log(`(${socket.id})`,`Stopping grapple...`);
-        players[idGrappled].grappledBy = null;
+        players[players[act[0]].grappling].grappledBy = null;
         players[act[0]].grappling = null;
       }
       
