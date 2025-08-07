@@ -16,20 +16,26 @@ app.use(express.static('public')); // frontend w folderze 'public'
 
 io.on('connection', (socket) => {
   console.log(`(${socket.id})`,`Connecting user... `);
-  
+
+  // Spawn postaci
   socket.on('sendInit', (player) => {
     console.log(`(${socket.id})`,`User ${player.id} spawned`);
     players[socket.id] = player;
   });
   
-
+  // Update współrzędnych postaci
+  socket.on('sendCoords', (newCoords) => {
+    //players[socket.id] = coords;
+    if(players[newCoords.socket] != undefined){
+      players[newCoords.socket].x = newCoords.x;
+      players[newCoords.socket].y = newCoords.y;
+    }
+      
+  });
 
 
   
-  // Kiedy klient wyśle swoje koordynaty
-  socket.on('sendCoords', (coords) => {
-    //players[socket.id] = coords;
-  });
+  
 
   // Wymuś kontrolę nad innym graczem
   socket.on('sendCoordsPlayer', (combinedCoords) => {
