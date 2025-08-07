@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
-      players[newCoords.socket].anim = newCoords.anim;
+      players[newCoords.socket].anim = players[newCoords.socket].forceanim != null ? players[newCoords.socket].forceanim : newCoords.anim;
       players[newCoords.socket].animtime = newCoords.animtime;
       players[newCoords.socket].timeout = Date.now();
     } else {
@@ -169,9 +169,9 @@ function distanceBetweenPoints(x1, y1, x2, y2) {
 
 setInterval(function(){
   for (let d in players) {
-    if(players[d].forceanim != ""){
+    if(players[d].forceanim != null){
       players[d].anim = players[d].forceanim;
-      players[d].forceanim = "";
+      players[d].forceanim = null;
     }
     if((Date.now() - players[d].timeout) > 5000){
       saveDisconnect(d);
