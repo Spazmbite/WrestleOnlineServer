@@ -68,10 +68,12 @@ io.on('connection', (socket) => {
     io.emit('updateLog', log); // wysyłamy do wszystkich
   });
 
+  socket.on('forceDisconnect', () => {
+    saveDisconnect();
+  });
+
   socket.on('disconnect', () => {
-    console.log(`(${socket.id})`,`User disconnected.`);
-    delete players[socket.id];
-    io.emit('updateCoords', players);
+    saveDisconnect();
   });
 });
 
@@ -107,6 +109,21 @@ function findNearestEnemy(id){
     }
   }
   return out;
+}
+
+function saveDisconnect(id){
+  // un-grappling
+  for (let p in players) {
+    if(players[p].grappledBy == id){
+      players[p].grappledBy = null;
+    }
+  }
+
+
+  // finish disconnect
+  console.log(`(${id})`,`User disconnected.`);
+  delete players[id];
+  io.emit('updatePlayers', players);
 }
 
 function playerId(id){
