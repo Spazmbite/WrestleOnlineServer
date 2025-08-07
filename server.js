@@ -30,6 +30,8 @@ io.on('connection', (socket) => {
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
+      players[newCoords.socket].anim = newCoords.anim;
+      players[newCoords.socket].animtime = newCoords.animtime;
       players[newCoords.socket].timeout = Date.now();
     } else {
       //console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
