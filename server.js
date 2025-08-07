@@ -121,7 +121,9 @@ function saveDisconnect(id){
 
 
   // finish disconnect
-  players[id].disconnected = true;
+  if(players[id] != undefined){
+    players[id].disconnected = true;
+  }
   io.emit('updatePlayers', players);
   console.log(`(${id})`,`User disconnected.`);
   delete players[id];
