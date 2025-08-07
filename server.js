@@ -69,11 +69,11 @@ io.on('connection', (socket) => {
   });
 
   socket.on('forceDisconnect', () => {
-    saveDisconnect();
+    saveDisconnect(socket.id);
   });
 
   socket.on('disconnect', () => {
-    saveDisconnect();
+    saveDisconnect(socket.id);
   });
 });
 
