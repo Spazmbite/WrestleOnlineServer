@@ -51,12 +51,12 @@ io.on('connection', (socket) => {
           console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
           players[act[0]].grappling = idGrappled;
           players[idGrappled].grappledBy = act[0];
-          players[idGrappled].anim = "idleGrapple";
+          players[idGrappled].forceanim = "idleGrapple";
         }
       } else {
         console.log(`(${socket.id})`,`Stopping grapple...`);
         players[players[act[0]].grappling].grappledBy = null;
-        players[players[act[0]].grappling].anim = "";
+        players[players[act[0]].grappling].forceanim = "";
         players[act[0]].grappling = null;
       }
       
@@ -169,6 +169,10 @@ function distanceBetweenPoints(x1, y1, x2, y2) {
 
 setInterval(function(){
   for (let d in players) {
+    if(players[d].forceanim != ""){
+      players[d].anim = players[d].forceanim;
+      players[d].forceanim = "";
+    }
     if((Date.now() - players[d].timeout) > 5000){
       saveDisconnect(d);
     }
