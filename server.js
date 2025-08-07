@@ -86,7 +86,7 @@ function findClosestEnemy(id){
       var thisDist = distanceBetweenPoints(players[id].x, players[id].y, players[p].x, players[p].y);
       if(thisDist < dist){
         dist = thisDist;
-        out = d;
+        out = p;
       }
     }
   }
