@@ -33,7 +33,8 @@ io.on('connection', (socket) => {
       if(players[newCoords.socket].forceanim != null){
         players[newCoords.socket].anim = players[newCoords.socket].forceanim;
         players[newCoords.socket].animtime = 0;
-        io.to(newCoords.socket).emit('updatePlayers', players);
+        //io.to(newCoords.socket).emit('updatePlayers', players);
+        io.emit('updatePlayers', players);
       } else {
         players[newCoords.socket].anim = newCoords.anim;
       }
