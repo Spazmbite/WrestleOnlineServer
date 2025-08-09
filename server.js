@@ -47,6 +47,15 @@ io.on('connection', (socket) => {
   // Informacje o akcji od usera
   socket.on('sendAction', (act) => {
     if(players[act[0]] != undefined){
+      // == attacking == 
+      if(act[1] == "attack"){
+        console.log(`(${socket.id})`,`Attacking...`);
+        var idAttacked = findNearestEnemy(act[0]);
+        if(idAttacked != null){
+            console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
+            players[idAttacked].forceanim = "gettingPunchTest";
+          }
+      }
       // == grappling ==
       if(act[1] == "grapple"){
         if(players[act[0]].grappling == null){
