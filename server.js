@@ -56,6 +56,9 @@ io.on('connection', (socket) => {
         if(idAttacked != null){
             console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
             players[idAttacked].forceanim = "gettingPunchTest";
+            players[idAttacked].anim = players[newCoords.socket].forceanim;
+            players[idAttacked].animtime = 0;
+            io.emit('updatePlayers', players);
           }
       }
       // == grappling ==
