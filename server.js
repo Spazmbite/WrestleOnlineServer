@@ -34,6 +34,7 @@ io.on('connection', (socket) => {
         players[newCoords.socket].anim = players[newCoords.socket].forceanim;
         players[newCoords.socket].animtime = 0;
         //io.to(newCoords.socket).emit('updatePlayers', players);
+        //io.emit('updatePlayers', players);
         
       } else {
         players[newCoords.socket].anim = newCoords.anim;
@@ -44,7 +45,7 @@ io.on('connection', (socket) => {
       //console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
     }
 
-    io.emit('updatePlayers', players);
+    
       
   });
 
@@ -60,7 +61,7 @@ io.on('connection', (socket) => {
             players[idAttacked].forceanim = "gettingPunchTest";
             players[idAttacked].anim = players[idAttacked].forceanim;
             players[idAttacked].animtime = 0;
-            io.emit('updatePlayers', players);
+            //io.emit('updatePlayers', players);
           }
       }
       // == grappling ==
@@ -199,7 +200,7 @@ setInterval(function(){
       saveDisconnect(d);
     }
   }
-  //io.emit('updatePlayers', players);
+  io.emit('updatePlayers', players);
 },20);
 
 setInterval(() => {
