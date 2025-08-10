@@ -50,9 +50,9 @@ io.on('connection', (socket) => {
   });
 
   socket.on('sendAnim', (newAnim) => {
-    if(players[newCoords.socket] != undefined){
-      players[newCoords.socket].anim = newCoords.anim;
-      players[newCoords.socket].animtime = newCoords.animtime;
+    if(players[newAnim.socket] != undefined){
+      players[newAnim.socket].anim = newAnim.anim;
+      players[newAnim.socket].animtime = newAnim.animtime;
     }
   });
 
