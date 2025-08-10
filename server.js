@@ -51,8 +51,11 @@ io.on('connection', (socket) => {
 
   socket.on('sendAnim', (newAnim) => {
     if(players[newAnim.socket] != undefined){
-      players[newAnim.socket].anim = newAnim.anim;
-      players[newAnim.socket].animtime = newAnim.animtime;
+      if(players[newAnim.socket].forceanim == null){
+        players[newAnim.socket].anim = newAnim.anim;
+        players[newAnim.socket].animtime = newAnim.animtime;
+      }
+      
     }
   });
 
