@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
         players[newCoords.socket].anim = players[newCoords.socket].forceanim;
         players[newCoords.socket].animtime = 0;
         //io.to(newCoords.socket).emit('updatePlayers', players);
-        io.emit('updatePlayers', players);
+        
       } else {
         players[newCoords.socket].anim = newCoords.anim;
       }
@@ -43,6 +43,8 @@ io.on('connection', (socket) => {
     } else {
       //console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
     }
+
+    io.emit('updatePlayers', players);
       
   });
 
@@ -197,7 +199,7 @@ setInterval(function(){
       saveDisconnect(d);
     }
   }
-  io.emit('updatePlayers', players);
+  //io.emit('updatePlayers', players);
 },20);
 
 setInterval(() => {
