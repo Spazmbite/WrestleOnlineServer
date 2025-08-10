@@ -30,7 +30,7 @@ io.on('connection', (socket) => {
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
-      if(players[newCoords.socket].forceanim != null){
+      /*if(players[newCoords.socket].forceanim != null){
         players[newCoords.socket].anim = players[newCoords.socket].forceanim;
         players[newCoords.socket].animtime = 0;
         //io.to(newCoords.socket).emit('updatePlayers', players);
@@ -39,7 +39,7 @@ io.on('connection', (socket) => {
       } else {
         players[newCoords.socket].anim = newCoords.anim;
       }
-      players[newCoords.socket].animtime = newCoords.animtime;
+      players[newCoords.socket].animtime = newCoords.animtime;*/
       players[newCoords.socket].timeout = Date.now();
     } else {
       //console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
@@ -47,6 +47,13 @@ io.on('connection', (socket) => {
 
     
       
+  });
+
+  socket.on('sendAnim', (newAnim) => {
+    if(players[newCoords.socket] != undefined){
+      players[newCoords.socket].anim = newCoords.anim;
+      players[newCoords.socket].animtime = newCoords.animtime;
+    }
   });
 
   // Informacje o akcji od usera
