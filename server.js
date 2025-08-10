@@ -69,8 +69,8 @@ io.on('connection', (socket) => {
         if(idAttacked != null){
             console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
             players[idAttacked].forceanim = "gettingPunchTest";
-            players[idAttacked].anim = players[idAttacked].forceanim;
-            players[idAttacked].animtime = 0;
+            //players[idAttacked].anim = players[idAttacked].forceanim;
+            //players[idAttacked].animtime = 0;
             //io.emit('updatePlayers', players);
           }
       }
@@ -204,7 +204,7 @@ setInterval(function(){
   for (let d in players) {
     if(players[d].forceanim != null){
       players[d].anim = players[d].forceanim;
-      players[d].forceanim = null;
+      //players[d].forceanim = null;
     }
     if((Date.now() - players[d].timeout) > 5000){
       saveDisconnect(d);
