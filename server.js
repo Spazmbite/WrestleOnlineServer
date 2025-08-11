@@ -30,7 +30,12 @@ io.on('connection', (socket) => {
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
-      players[newCoords.socket].animtime = newCoords.animtime;
+      if(players[newCoords.socket].grappledBy != null){
+        players[newCoords.socket].animtime = players[players[newCoords.socket].grappledBy].animtime;
+      } else {
+        players[newCoords.socket].animtime = newCoords.animtime;
+      }
+      
       /*if(players[newCoords.socket].forceanim != null){
         players[newCoords.socket].anim = players[newCoords.socket].forceanim;
         players[newCoords.socket].animtime = 0;
