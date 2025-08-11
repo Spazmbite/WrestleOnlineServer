@@ -93,6 +93,14 @@ io.on('connection', (socket) => {
         }
         
       }
+
+      // == grappling attack
+      if(act[1] == "performAttack"){
+        console.log(`(${socket.id})`,`Performing move...`,act[2]);
+        players[players[act[0]].grappling].grappledBy = null;
+        players[players[act[0]].grappling].forceanim = act[2];
+        players[act[0]].grappling = null;
+      }
     }
 
     io.emit('updatePlayers', players);
