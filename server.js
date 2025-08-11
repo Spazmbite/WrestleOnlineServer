@@ -57,6 +57,7 @@ io.on('connection', (socket) => {
       if(players[newAnim.socket].forceanim != null && newAnim.forceanim == null){
         
       } else {
+        players[newAnim.socket].prevanim = newAnim.prevanim;
         players[newAnim.socket].anim = newAnim.anim;
         players[newAnim.socket].forceanim = newAnim.forceanim;
         players[newAnim.socket].animtime = newAnim.animtime;
