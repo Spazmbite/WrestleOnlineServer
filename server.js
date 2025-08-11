@@ -30,11 +30,8 @@ io.on('connection', (socket) => {
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
-      if(players[newCoords.socket].attackedBy != null){
-        players[newCoords.socket].animtime = players[players[newCoords.socket].grappledBy].animtime;
-      } else {
-        players[newCoords.socket].animtime = newCoords.animtime;
-      }
+      players[newCoords.socket].animtime = newCoords.animtime;
+      
       
       /*if(players[newCoords.socket].forceanim != null){
         players[newCoords.socket].anim = players[newCoords.socket].forceanim;
@@ -78,7 +75,6 @@ io.on('connection', (socket) => {
         if(idAttacked != null){
             console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
             players[idAttacked].forceanim = "gettingPunchTest";
-            players[idAttacked].attackedBy = socket.id;
             //players[idAttacked].anim = players[idAttacked].forceanim;
             //players[idAttacked].animtime = 0;
             //io.emit('updatePlayers', players);
@@ -109,7 +105,6 @@ io.on('connection', (socket) => {
         console.log(`(${socket.id})`,`Performing move...`,act[2]);
         players[players[act[0]].grappling].grappledBy = null;
         players[players[act[0]].grappling].forceanim = act[2];
-        players[players[act[0]].grappling].attackedBy = socket.id;
         players[act[0]].grappling = null;
       }
     }
