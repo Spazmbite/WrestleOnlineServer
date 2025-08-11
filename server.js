@@ -51,11 +51,13 @@ io.on('connection', (socket) => {
 
   socket.on('sendAnim', (newAnim) => {
     if(players[newAnim.socket] != undefined){
-      //if(players[newAnim.socket].forceanim == null){
-      players[newAnim.socket].anim = newAnim.anim;
-      players[newAnim.socket].forceanim = newAnim.forceanim;
-      players[newAnim.socket].animtime = newAnim.animtime;
-      //}
+      if(players[newAnim.socket].forceanim != null && newAnim.forceanim == null){
+        
+      } else {
+        players[newAnim.socket].anim = newAnim.anim;
+        players[newAnim.socket].forceanim = newAnim.forceanim;
+        players[newAnim.socket].animtime = newAnim.animtime;
+      }
       
     }
   });
@@ -215,7 +217,7 @@ setInterval(function(){
       if(players[d].anim != players[d].forceanim){
         players[d].anim = players[d].forceanim;
       } else {
-        //players[d].forceanim = null;
+        players[d].forceanim = null;
       }
       
       //
