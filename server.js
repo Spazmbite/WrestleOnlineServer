@@ -214,7 +214,7 @@ setInterval(function(){
       if(players[d].anim != players[d].forceanim){
         players[d].anim = players[d].forceanim;
       } else {
-        players[d].forceanim = null;
+        //players[d].forceanim = null;
       }
       
       //
