@@ -29,7 +29,7 @@ io.on('connection', (socket) => {
     if(players[newCoords.socket] != undefined){
 
       players[newCoords.socket].timeout = Date.now();
-      if(players[newCoords.socket].controlledBy != null){ return; }
+      if(players[newCoords.socket].controlledBy != null && newCoords.socket == socket.id){ return; }
       
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
