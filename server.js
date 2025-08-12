@@ -28,6 +28,7 @@ io.on('connection', (socket) => {
     //players[socket.id] = coords;
     if(players[newCoords.socket] != undefined){
 
+      players[newCoords.socket].timeout = Date.now();
       if(players[newCoords.socket].controlledBy != null){ return; }
       
       players[newCoords.socket].x = newCoords.x;
@@ -46,7 +47,7 @@ io.on('connection', (socket) => {
         players[newCoords.socket].anim = newCoords.anim;
       }
       players[newCoords.socket].animtime = newCoords.animtime;*/
-      players[newCoords.socket].timeout = Date.now();
+      
     } else {
       //console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
     }
