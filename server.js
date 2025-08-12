@@ -27,6 +27,9 @@ io.on('connection', (socket) => {
   socket.on('sendCoords', (newCoords) => {
     //players[socket.id] = coords;
     if(players[newCoords.socket] != undefined){
+
+      if(players[newCoords.socket].controlledBy != null){ return; }
+      
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
@@ -90,11 +93,13 @@ io.on('connection', (socket) => {
             console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
             players[act[0]].grappling = idGrappled;
             players[idGrappled].grappledBy = act[0];
+            players[idGrappled].controlledBy = act[0];
             players[idGrappled].forceanim = "idleGrapple";
           }
         } else {
           console.log(`(${socket.id})`,`Stopping grapple...`);
           players[players[act[0]].grappling].grappledBy = null;
+          players[players[act[0]].grappling].controlledBy = null;
           players[players[act[0]].grappling].forceanim = "";
           players[act[0]].grappling = null;
         }
