@@ -29,6 +29,7 @@ io.on('connection', (socket) => {
     if(players[newCoords.socket] != undefined){
 
       players[newCoords.socket].timeout = Date.now();
+      
       //if(players[newCoords.socket].controlledBy != null && newCoords.socket == socket.id){ return; }
 
       if(players[newCoords.socket].controlledBy){ console.log(socket.id,newCoords.socket) }
@@ -37,6 +38,7 @@ io.on('connection', (socket) => {
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
       players[newCoords.socket].animtime = newCoords.animtime;
+      players[newCoords.socket].socket = newCoords.socket;
       
       
       /*if(players[newCoords.socket].forceanim != null){
