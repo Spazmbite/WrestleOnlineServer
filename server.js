@@ -30,10 +30,6 @@ io.on('connection', (socket) => {
 
       players[newCoords.socket].timeout = Date.now();
       
-      if(players[newCoords.socket].controlledBy != null && newCoords.socket == socket.id){ return; }
-
-      if(players[newCoords.socket].controlledBy){ console.log(socket.id,newCoords.socket) }
-      
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
