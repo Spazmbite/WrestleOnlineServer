@@ -36,20 +36,6 @@ io.on('connection', (socket) => {
       players[newCoords.socket].animtime = newCoords.animtime;
       players[newCoords.socket].socket = newCoords.socket;
       
-      
-      
-      
-      /*if(players[newCoords.socket].forceanim != null){
-        players[newCoords.socket].anim = players[newCoords.socket].forceanim;
-        players[newCoords.socket].animtime = 0;
-        //io.to(newCoords.socket).emit('updatePlayers', players);
-        io.emit('updatePlayers', players);
-        
-      } else {
-        players[newCoords.socket].anim = newCoords.anim;
-      }
-      players[newCoords.socket].animtime = newCoords.animtime;*/
-      
     } else {
       //console.log(`(${socket.id})`,`Tries to send coords but something gone wrong.`,newCoords.socket);
     }
@@ -60,17 +46,7 @@ io.on('connection', (socket) => {
 
   socket.on('sendAnim', (newAnim) => {
     if(players[newAnim.socket] != undefined){
-      if(players[newAnim.socket].forceanim != null && newAnim.forceanim == null){
-        
-      } else {
-        players[newAnim.socket].prevanim = newAnim.prevanim;
-        players[newAnim.socket].action = newAnim.action;
-        players[newAnim.socket].anim = newAnim.anim;
-        
-        players[newAnim.socket].forceanim = newAnim.forceanim;
-        players[newAnim.socket].animtime = newAnim.animtime;
-      }
-      
+           
     }
   });
 
@@ -82,12 +58,10 @@ io.on('connection', (socket) => {
         console.log(`(${socket.id})`,`Attacking...`);
         var idAttacked = findNearestEnemy(act[0]);
         if(idAttacked != null){
-            console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
-            players[idAttacked].forceanim = "gettingPunchTest";
-            //players[idAttacked].anim = players[idAttacked].forceanim;
-            //players[idAttacked].animtime = 0;
-            //io.emit('updatePlayers', players);
-          }
+        console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
+        
+        //players[idAttacked].forceanim = "gettingPunchTest";
+        }
       }
       // == grappling ==
       if(act[1] == "grapple"){
@@ -98,15 +72,15 @@ io.on('connection', (socket) => {
             console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
             players[act[0]].grappling = idGrappled;
             players[idGrappled].grappledBy = act[0];
-            //players[idGrappled].controlledBy = act[0];
-            players[idGrappled].forceanim = "idleGrapple";
+            
+            //players[idGrappled].forceanim = "idleGrapple";
           }
         } else {
           console.log(`(${socket.id})`,`Stopping grapple...`);
           players[players[act[0]].grappling].grappledBy = null;
-          //players[players[act[0]].grappling].controlledBy = null;
-          players[players[act[0]].grappling].forceanim = "";
           players[act[0]].grappling = null;
+          
+          //players[players[act[0]].grappling].forceanim = "";
         }
         
       }
@@ -115,22 +89,14 @@ io.on('connection', (socket) => {
       if(act[1] == "performAttack"){
         console.log(`(${socket.id})`,`Performing move...`,act[2]);
         players[players[act[0]].grappling].grappledBy = null;
-        players[players[act[0]].grappling].forceanim = act[2];
         players[act[0]].grappling = null;
+        
+        //players[players[act[0]].grappling].forceanim = act[2];
       }
     }
 
     io.emit('updatePlayers', players);
   });
-
-  
-  
-
-  // Wymuś kontrolę nad innym graczem
-  socket.on('sendCoordsPlayer', (combinedCoords) => {
-    players[pId(combinedCoords[0])] = combinedCoords[1];
-  });
-
   
 
   // Kiedy klient wyśle info log
@@ -227,14 +193,14 @@ function distanceBetweenPoints(x1, y1, x2, y2) {
 
 setInterval(function(){
   for (let d in players) {
-    if(players[d].forceanim != null){
+    /*if(players[d].forceanim != null){
       if(players[d].anim != players[d].forceanim){
         players[d].anim = players[d].forceanim;
       } else {
         players[d].forceanim = null;
       }
       
-      //
+      //*/
     }
     if((Date.now() - players[d].timeout) > 5000){
       saveDisconnect(d);
@@ -244,7 +210,7 @@ setInterval(function(){
   for (let d in players) {
     //players[d].action = "";
   }
-},20);
+},10);
 
 setInterval(() => {
   fetch("https://wrestleonlineserver.onrender.com")
