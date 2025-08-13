@@ -246,7 +246,7 @@ setInterval(function(){
   }
   io.emit('updatePlayers', players);
   for (let d in players) {
-    players[d].action = "";
+    //players[d].action = "";
   }
 },20);
 
