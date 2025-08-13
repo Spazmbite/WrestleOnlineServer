@@ -56,9 +56,11 @@ io.on('connection', (socket) => {
       if(act[1] == "attack"){
         console.log(`(${socket.id})`,`Attacking...`);
         var idAttacked = findNearestEnemy(act[0]);
+        
+        players[act[0]].anim = "punchTest";
+        
         if(idAttacked != null){
           console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
-          players[socket.id].anim = "punchTest";
           
           //players[idAttacked].forceanim = "gettingPunchTest";
         }
@@ -204,7 +206,7 @@ setInterval(function(){
     }*/
 
     if(players[d].anim != "" && players[d].anim != null){
-      console.log(players[d].anim);
+      //console.log(players[d].anim);
     }
     if((Date.now() - players[d].timeout) > 5000){
       saveDisconnect(d);
