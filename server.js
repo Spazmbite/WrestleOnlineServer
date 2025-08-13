@@ -57,7 +57,7 @@ io.on('connection', (socket) => {
         console.log(`(${socket.id})`,`Attacking...`);
         var idAttacked = findNearestEnemy(act[0]);
         
-        players[act[0]].anim = "punchTest";
+        players[act[0]].runanim = "punchTest";
         
         if(idAttacked != null){
           console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
