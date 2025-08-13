@@ -97,7 +97,8 @@ io.on('connection', (socket) => {
       }
     }
 
-    //io.emit('updatePlayers', players);
+    io.emit('updatePlayers', players);
+    players[act[0]].runanim = "";
   });
   
 
