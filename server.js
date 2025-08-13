@@ -65,7 +65,7 @@ io.on('connection', (socket) => {
       } else {
         players[newAnim.socket].prevanim = newAnim.prevanim;
         players[newAnim.socket].action = newAnim.action;
-        if(newCoords.action != ""){
+        if(newAnim.action != ""){
           players[newAnim.socket].anim = newAnim.action;
         } else {
           players[newAnim.socket].anim = newAnim.anim;
