@@ -35,7 +35,8 @@ io.on('connection', (socket) => {
       players[newCoords.socket].facing = newCoords.facing;
       players[newCoords.socket].animtime = newCoords.animtime;
       players[newCoords.socket].socket = newCoords.socket;
-      players[newCoords.socket].action = newCoords.action;
+      
+      
       
       
       /*if(players[newCoords.socket].forceanim != null){
@@ -63,7 +64,13 @@ io.on('connection', (socket) => {
         
       } else {
         players[newAnim.socket].prevanim = newAnim.prevanim;
-        players[newAnim.socket].anim = newAnim.anim;
+        players[newCoords.socket].action = newAnim.action;
+        if(newCoords.action != ""){
+          players[newAnim.socket].anim = newAnim.action;
+        } else {
+          players[newAnim.socket].anim = newAnim.anim;
+        }
+        
         players[newAnim.socket].forceanim = newAnim.forceanim;
         players[newAnim.socket].animtime = newAnim.animtime;
       }
