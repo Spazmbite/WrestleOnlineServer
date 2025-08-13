@@ -34,7 +34,7 @@ io.on('connection', (socket) => {
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
       players[newCoords.socket].running = newCoords.running;
-      //players[newCoords.socket].anim = newCoords.anim;
+      players[newCoords.socket].anim = newCoords.anim;
       players[newCoords.socket].animtime = newCoords.animtime;
       players[newCoords.socket].socket = newCoords.socket;
       
@@ -204,10 +204,6 @@ setInterval(function(){
       
       //
     }*/
-
-    if(players[d].anim != "" && players[d].anim != null){
-      //console.log(players[d].anim);
-    }
     if((Date.now() - players[d].timeout) > 5000){
       saveDisconnect(d);
     }
