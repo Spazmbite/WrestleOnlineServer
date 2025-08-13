@@ -203,7 +203,7 @@ setInterval(function(){
       //
     }*/
 
-    if(players[d].anim != "" || players[d].anim != null){
+    if(players[d].anim != "" && players[d].anim != null){
       console.log(players[d].anim);
     }
     if((Date.now() - players[d].timeout) > 5000){
