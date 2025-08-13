@@ -245,6 +245,7 @@ setInterval(function(){
     }
   }
   io.emit('updatePlayers', players);
+  players[d].action = "";
 },20);
 
 setInterval(() => {
