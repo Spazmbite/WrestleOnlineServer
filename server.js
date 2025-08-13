@@ -63,10 +63,11 @@ io.on('connection', (socket) => {
         console.log(`(${socket.id})`,`Attacking...`);
         var idAttacked = findNearestEnemy(act[0]);
         
-        players[act[0]].runanim = "punchTest";
+        players[act[0]].runanim = act[2];
         
         if(idAttacked != null){
           console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
+          players[idAttacked].runanim = act[3];
           
           //players[idAttacked].forceanim = "gettingPunchTest";
         }
