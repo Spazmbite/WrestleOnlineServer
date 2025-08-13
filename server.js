@@ -66,9 +66,9 @@ io.on('connection', (socket) => {
         players[newAnim.socket].prevanim = newAnim.prevanim;
         players[newAnim.socket].action = newAnim.action;
         if(newAnim.action != ""){
-          players[newAnim.socket].anim = newAnim.action;
+          //players[newAnim.socket].anim = newAnim.action;
         } else {
-          players[newAnim.socket].anim = newAnim.anim;
+          //players[newAnim.socket].anim = newAnim.anim;
         }
         
         players[newAnim.socket].forceanim = newAnim.forceanim;
@@ -232,8 +232,8 @@ function distanceBetweenPoints(x1, y1, x2, y2) {
 setInterval(function(){
   for (let d in players) {
     if(players[d].forceanim != null){
-      if(players[d].anim != players[d].forceanim){
-        players[d].anim = players[d].forceanim;
+      if(players[d].action != players[d].forceanim){
+        players[d].action = players[d].forceanim;
       } else {
         players[d].forceanim = null;
       }
