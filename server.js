@@ -8,6 +8,7 @@ const io = require('socket.io')(http, {
   }
 });
 
+
 const PORT = process.env.PORT || 3000;
 
 let players = {}; // tu trzymamy dane o użytkownikach
