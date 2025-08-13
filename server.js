@@ -35,6 +35,7 @@ io.on('connection', (socket) => {
       players[newCoords.socket].facing = newCoords.facing;
       players[newCoords.socket].animtime = newCoords.animtime;
       players[newCoords.socket].socket = newCoords.socket;
+      players[newCoords.socket].action = newCoords.action;
       
       
       /*if(players[newCoords.socket].forceanim != null){
