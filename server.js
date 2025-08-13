@@ -33,6 +33,7 @@ io.on('connection', (socket) => {
       players[newCoords.socket].x = newCoords.x;
       players[newCoords.socket].y = newCoords.y;
       players[newCoords.socket].facing = newCoords.facing;
+      players[newCoords.socket].running = newCoords.running;
       players[newCoords.socket].animtime = newCoords.animtime;
       players[newCoords.socket].socket = newCoords.socket;
       
@@ -55,9 +56,10 @@ io.on('connection', (socket) => {
         console.log(`(${socket.id})`,`Attacking...`);
         var idAttacked = findNearestEnemy(act[0]);
         if(idAttacked != null){
-        console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
-        
-        //players[idAttacked].forceanim = "gettingPunchTest";
+          console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
+          players[act[0]].anim = "punchTest";
+          
+          //players[idAttacked].forceanim = "gettingPunchTest";
         }
       }
       // == grappling ==
