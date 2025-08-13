@@ -53,6 +53,11 @@ io.on('connection', (socket) => {
   // Informacje o akcji od usera
   socket.on('sendAction', (act) => {
     if(players[act[0]] != undefined){
+      // == walking ==
+      if(act[1] == "walk"){
+        players[act[0]].runanim = act[2];
+      }
+      
       // == attacking == 
       if(act[1] == "attack"){
         console.log(`(${socket.id})`,`Attacking...`);
