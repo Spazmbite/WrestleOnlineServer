@@ -106,6 +106,9 @@ io.on('connection', (socket) => {
 
     io.emit('updatePlayers', players);
     players[act[0]].runanim = "";
+    if(idAttacked != null){
+      players[idAttacked].runanim = "";
+    }
   });
   
 
