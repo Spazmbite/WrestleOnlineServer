@@ -90,11 +90,11 @@ io.on('connection', (socket) => {
           }
         } else {
           console.log(`(${socket.id})`,`Stopping grapple...`);
+          players[act[0]].runanim = "";
+          players[players[act[0]].grappling].runanim = "";
           players[players[act[0]].grappling].grappledBy = null;
           players[act[0]].grappling = null;
 
-          players[act[0]].runanim = "";
-          players[players[act[0]].grappling].runanim = "";
           //players[players[act[0]].grappling].forceanim = "";
         }
         
