@@ -115,14 +115,27 @@ io.on('connection', (socket) => {
 
 
 
-    if(players[act[0]] != undefined && act[1] < players[act[0]].animprio){
-      players[act[0]].runanim = "";
+    if(players[act[0]] != undefined){
+      if(act[1] < players[act[0]].animprio){
+        players[act[0]].runanim = "";
+      } else {
+        players[act[0]].animprio = act[1];
+      }
+      
     }
-    if(idAttacked != null && act[1] < players[idAttacked].animprio){
-      players[idAttacked].runanim = "";
+    if(idAttacked != null){
+      if(act[1] < players[idAttacked].animprio){
+        players[idAttacked].runanim = "";
+      } else {
+        players[idAttacked].animprio = act[1];
+      }
     }
-    if(idGrappled != null && act[1] < players[idGrappled].animprio){
-      players[idGrappled].runanim = "";
+    if(idGrappled != null){
+      if(act[1] < players[idGrappled].animprio){
+        players[idGrappled].runanim = "";
+      } else {
+        players[idGrappled].animprio = act[1];
+      }
     }
     
     io.emit('updatePlayers', players);
