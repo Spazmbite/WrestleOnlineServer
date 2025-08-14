@@ -78,20 +78,20 @@ io.on('connection', (socket) => {
           console.log(`(${socket.id})`,`Grappling...`);
           var idGrappled = findNearestEnemy(act[0]);
 
-          players[act[0]].runanim = "idleGrapple";
+          players[act[0]].runanim = act[2];
           
           if(idGrappled != null){
             console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
             players[act[0]].grappling = idGrappled;
             players[idGrappled].grappledBy = act[0];
 
-            players[idGrappled].runanim = "idleGrapple";
+            players[idGrappled].runanim = act[3];
             
           }
         } else {
           console.log(`(${socket.id})`,`Stopping grapple...`);
-          players[act[0]].runanim = "";
-          players[players[act[0]].grappling].runanim = "";
+          players[act[0]].runanim = " ";
+          players[players[act[0]].grappling].runanim = " ";
           players[players[act[0]].grappling].grappledBy = null;
           players[act[0]].grappling = null;
 
