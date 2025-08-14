@@ -7,8 +7,6 @@ const io = require('socket.io')(http, {
     methods: ["GET", "POST"]
   }
 });
-
-
 const PORT = process.env.PORT || 3000;
 
 let players = {}; // tu trzymamy dane o użytkownikach
@@ -36,6 +34,7 @@ io.on('connection', (socket) => {
       players[newCoords.socket].facing = newCoords.facing;
       players[newCoords.socket].running = newCoords.running;
       players[newCoords.socket].anim = newCoords.anim;
+      players[newCoords.socket].animprio = newCoords.animprio;
       //players[newCoords.socket].animtime = newCoords.animtime;
       players[newCoords.socket].socket = newCoords.socket;
       
@@ -54,38 +53,38 @@ io.on('connection', (socket) => {
   socket.on('sendAction', (act) => {
     if(players[act[0]] != undefined){
       // == walking ==
-      if(act[1] == "walk"){
-        players[act[0]].runanim = act[2];
+      if(act[2] == "walk"){
+        players[act[0]].runanim = act[3];
       }
       
       // == attacking == 
-      if(act[1] == "attack"){
+      if(act[2] == "attack"){
         console.log(`(${socket.id})`,`Attacking...`);
         var idAttacked = findNearestEnemy(act[0]);
         
-        players[act[0]].runanim = act[2];
+        players[act[0]].runanim = act[3];
         
         if(idAttacked != null){
           console.log(`(${socket.id})`,`Attacked ${idAttacked}`);
-          players[idAttacked].runanim = act[3];
+          players[idAttacked].runanim = act[4];
           
           //players[idAttacked].forceanim = "gettingPunchTest";
         }
       }
       // == grappling ==
-      if(act[1] == "grapple"){
+      if(act[2] == "grapple"){
         if(players[act[0]].grappling == null){
           console.log(`(${socket.id})`,`Grappling...`);
           var idGrappled = findNearestEnemy(act[0]);
 
-          players[act[0]].runanim = act[2];
+          players[act[0]].runanim = act[3];
           
           if(idGrappled != null){
             console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
             players[act[0]].grappling = idGrappled;
             players[idGrappled].grappledBy = act[0];
 
-            players[idGrappled].runanim = act[3];
+            players[idGrappled].runanim = act[4];
             
           }
         } else {
@@ -101,11 +100,11 @@ io.on('connection', (socket) => {
       }
 
       // == grappling attack
-      if(act[1] == "performAttack"){
-        console.log(`(${socket.id})`,`Performing move...`,act[2]);
+      if(act[2] == "performAttack"){
+        console.log(`(${socket.id})`,`Performing move...`,act[3]);
 
-        players[act[0]].runanim = act[2];
-        players[players[act[0]].grappling].runanim = act[3];
+        players[act[0]].runanim = act[3];
+        players[players[act[0]].grappling].runanim = act[4];
         
         players[players[act[0]].grappling].grappledBy = null;
         players[act[0]].grappling = null;
@@ -114,6 +113,18 @@ io.on('connection', (socket) => {
       }
     }
 
+
+
+    if(players[act[0]] != undefined && act[1] < players[act[0]].animprio){
+      players[act[0]].runanim = "";
+    }
+    if(idAttacked != null && act[1] < players[idAttacked].animprio){
+      players[idAttacked].runanim = "";
+    }
+    if(idGrappled != null && act[1] < players[idGrappled].animprio){
+      players[idGrappled].runanim = "";
+    }
+    
     io.emit('updatePlayers', players);
     if(players[act[0]] != undefined){
       players[act[0]].runanim = "";
