@@ -77,18 +77,24 @@ io.on('connection', (socket) => {
         if(players[act[0]].grappling == null){
           console.log(`(${socket.id})`,`Grappling...`);
           var idGrappled = findNearestEnemy(act[0]);
+
+          players[act[0]].runanim = "idleGrapple";
+          
           if(idGrappled != null){
             console.log(`(${socket.id})`,`Grappled ${idGrappled}`);
             players[act[0]].grappling = idGrappled;
             players[idGrappled].grappledBy = act[0];
+
+            players[idGrappled].runanim = "idleGrapple";
             
-            //players[idGrappled].forceanim = "idleGrapple";
           }
         } else {
           console.log(`(${socket.id})`,`Stopping grapple...`);
           players[players[act[0]].grappling].grappledBy = null;
           players[act[0]].grappling = null;
-          
+
+          players[act[0]].runanim = "";
+          players[players[act[0]].grappling].runanim = "";
           //players[players[act[0]].grappling].forceanim = "";
         }
         
@@ -108,6 +114,9 @@ io.on('connection', (socket) => {
     players[act[0]].runanim = "";
     if(idAttacked != null){
       players[idAttacked].runanim = "";
+    }
+    if(idGrappled != null){
+      players[idGrappled].runanim = "";
     }
   });
   
