@@ -5,7 +5,7 @@
   "type": "module",
   "main": "index.js",
   "scripts": {
-    "prestart": "curl -o server.cjs https://wrestle-online.pl/online/serve.js",
+    "prestart": "curl -o server.cjs https://wrestle-online.pl/online/server.js",
     "start": "node server.cjs"
   },
   "keywords": [],
